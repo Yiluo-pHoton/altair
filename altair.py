@@ -16,14 +16,16 @@ class CellStatus:
     OCCUPIED_LOW = 2
     OCCUPIED_HIGH = 3
 
+
 # Modes are for scanner to flag for the commander
 class Modes:
     ATTACK = 0
     EXPANSION = 1
     DEFEND_BORDER = 2
-    DEFENT_BASE = 3
+    DEFEND_BASE = 3
     DEFEND_ENERGY = 4
     FILL = 5
+
 
 # Directions are for commander to instruct evaluator where to evaluate
 class Directions:
@@ -44,28 +46,65 @@ class BaseStatus:
 
 
 class Handler():
-    def __init__(self, game):
-        self.game = game
+    '''
+    Handler will allow access for other objects
+    '''
+
+    def __init__(self, altair):
+        self.altair = altair
+
+        def get_altair(self):
+            return self.altair
+
     def get_game(self):
-        return game
+        return self.altair.g
 
     def get_evaluator(self):
-        return game.evaluator
+        return self.altair.evaluator
 
-class Evaluator():
-    def __init__(self):
+    def get_base_guardians(self):
+        return self.altair.base_guardians
+
+
+class Evaluator:
+    def __init__(self, handler):
+        self.handler = handler
 
 
 class BaseGuardian:
-    def __init__(self):
+    '''
+    BaseGuardian will flag statuses of each bases to the commander
+    and act based on the commander's decision
+    '''
+
+    def __init__(self, handler):
+        self.handler = handler
 
 
 class GoldGuardian:
-    def __init__(self):
+    '''
+    GoldGuardian will flag statuses of each golden cell to the
+    commander and act based on the commander's decision
+    ''''
+
+    def __init__(self, handler):
+        self.handler = handler
+
+
+class EnergyGuardian:
+    '''
+    EnergyGuardian will flag statuses of each golden cell to the
+    commander and act based on the commander's decision
+    It will also make sure there is enough energy for use
+    '''
+    def __init__(self, handler):
+        self.handler =
 
 
 class BorderGuardian:
-    def __init__(self):
+
+    def __init__(self, handler):
+        self.handler = handler
         self.borders = []
 
     def guard_individual(user_id):
@@ -74,4 +113,30 @@ class BorderGuardian:
     def guard_direction(direction):
         "stub"
 
+
+class RankKeeper:
+
+    def __init__(self, handler):
+        self.handler = handler
+
+
+class UserReporter:
+
+    def __init__(self, handler):
+        self.handler = handler
+
+
+class Altair:
+    '''
+    Altair will be the commander that runs the game and am in charge of
+    all of her factions
+    '''
+    def __init__(self):
+        self.handler = (Handler(self))
+
+        self.bases = []
+        self.base_guardians = []
+
+
+# Enter the main loop for the AI
 if __name__ == '__main__':
