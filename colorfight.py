@@ -2,6 +2,7 @@ import requests
 import json
 import os
 import random
+from altair import Handler
 
 hostUrl   = 'https://colorfight.herokuapp.com/'
 #hostUrl   = 'http://localhost:8000/'
@@ -51,12 +52,13 @@ class User:
         self.cellNum    = userData['cell_num']
         if 'energy' in userData:
             self.energy = userData['energy']
-    
+
     def __repr__(self):
         return "uid: {}\nname: {}\ncd time: {}\ncell number: {}\n".format(self.id, self.name, self.cdTime, self.cellNum)
 
 class Game:
     def __init__(self):
+        self.handler = Handler(self)
         self.data = None
         self.token = ''
         self.name  = ''
@@ -81,7 +83,7 @@ class Game:
                         self.name = data['name']
                         self.uid  = data['uid']
                         return True
-    
+
         headers = {'content-type': 'application/json'}
         data = {'name':name}
         if password != None:
@@ -188,5 +190,3 @@ class Game:
             else:
                 return False
         return True
-
-
